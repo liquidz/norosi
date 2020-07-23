@@ -1,0 +1,24 @@
+{
+ :paths ["src"]
+ :deps
+ {org.clojure/clojure {:mvn/version "1.10.1"}
+  org.clojure/core.async {:mvn/version "1.2.603"}
+  org.clojure/tools.cli {:mvn/version "1.0.194"}
+  com.stuartsierra/component {:mvn/version "1.0.0"}}
+
+ :aliases
+ {:dev
+  {:extra-paths ["dev" "test"]
+   :extra-deps {lambdaisland/kaocha {:mvn/version "1.0.641"}}}
+
+  :test
+  {:main-opts ["-m" "kaocha.runner"]}
+
+  :outdated
+  {:extra-deps {antq {:mvn/version "RELEASE"}}
+   :main-opts ["-m" "antq.core"]}
+
+  :depstar
+  {:extra-deps {seancorfield/depstar {:mvn/version "RELEASE"}}}
+  }
+}
