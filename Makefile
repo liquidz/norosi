@@ -16,6 +16,10 @@ run:
 test:
 	clojure -R:dev -A:test
 
+lint:
+	cljstyle check
+	clj-kondo --lint src:test
+
 outdated:
 	clojure -A:outdated
 
