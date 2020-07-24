@@ -1,7 +1,6 @@
 (ns colf.block.animation.slide
   (:require
-   [colf.block.core :as b.core]
-   [colf.color :as color]))
+   [colf.block.core :as b.core]))
 
 (defn slide-out
   [{:keys [blocks width color-code]}]
@@ -13,8 +12,12 @@
        (map-indexed
         (fn [j line]
           (let [[head tail] (split-at (- i j) line)]
-            (concat (repeat (count head) (color/colorize color-code b.core/fill-block))
+            (concat (repeat (count head) (assoc b.core/fill-block :color color-code))
                     tail)))
         lines)))))
 
 (def slide-in (comp reverse slide-out))
+
+(comment
+ (colf.block.animation/test-play! slide-out)
+ (colf.block.animation/test-play! slide-in))

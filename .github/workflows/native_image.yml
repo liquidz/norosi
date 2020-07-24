@@ -7,58 +7,39 @@ on:
       - '*'
 
 jobs:
-  linux-amd64:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v2
-      - name: Install GraalVM
-        run: |
-          cd /tmp
-          if ! [ -d /tmp/graalvm-ce-java11-20.1.0 ]; then
-            curl -O -sL https://github.com/graalvm/graalvm-ce-builds/releases/download/vm-20.1.0/graalvm-ce-java11-linux-amd64-20.1.0.tar.gz
-            tar xzf graalvm-ce-java11-linux-amd64-20.1.0.tar.gz
-          fi
-      - name: Build native image
-        env:
-          GRAALVM_HOME: /tmp/graalvm-ce-java11-20.1.0
-        run: |
-          ${GRAALVM_HOME}/bin/gu install native-image
-          make native-image
-      - name: Rename
-        run: mv colf colf.linux-amd64
-      - uses: actions/upload-artifact@master
-        with:
-          name: colf.linux-amd64
-          path: ./colf.linux-amd64
+  native-image:
+    strategy:
+      matrix:
+        include:
+          - os: ubuntu-latest
+            suffix: linux-amd64
+          - os: macOS-latest
+            suffix: darwin-amd64
 
-  darwin-amd64:
-    runs-on: macOS-latest
+    runs-on: ${{ matrix.os }}
     steps:
       - uses: actions/checkout@v2
-      - name: Install leiningen
-        run: brew install leiningen
       - name: Install GraalVM
-        run: |
-          cd /tmp
-          if ! [ -d /tmp/graalvm-ce-java11-20.1.0 ]; then
-            curl -O -sL https://github.com/graalvm/graalvm-ce-builds/releases/download/vm-20.1.0/graalvm-ce-java11-darwin-amd64-20.1.0.tar.gz
-            tar xzf graalvm-ce-java11-darwin-amd64-20.1.0.tar.gz
-          fi
+        uses: DeLaGuardo/setup-graalvm@3
+        with:
+          graalvm-version: '20.1.0.java11'
+      - name: Install Clojure CLI
+        uses: DeLaGuardo/setup-clojure@2.0
+        with:
+          tools-deps: 'latest'
       - name: Build native image
-        env:
-          GRAALVM_HOME: /tmp/graalvm-ce-java11-20.1.0/Contents/Home
         run: |
-          ${GRAALVM_HOME}/bin/gu install native-image
+          gu install native-image
           make native-image
       - name: Rename
-        run: mv colf colf.darwin-amd64
-      - uses: actions/upload-artifact@master
+        run: mv colf colf.${{ matrix.suffix  }}
+      - uses: actions/upload-artifact@v2
         with:
-          name: colf.darwin-amd64
-          path: ./colf.darwin-amd64
+          name: colf.${{ matrix.suffix  }}
+          path: ./colf.${{ matrix.suffix  }}
 
   create-release:
-    needs: [linux-amd64, darwin-amd64]
+    needs: [native-image]
     if: contains(github.ref, 'refs/tags/')
     runs-on: ubuntu-latest
     steps:
@@ -75,7 +56,7 @@ jobs:
           draft: false
           prerelease: false
 
-      - uses: actions/download-artifact@master
+      - uses: actions/download-artifact@v2
         with:
           name: colf.linux-amd64
           path: tmp
@@ -89,7 +70,7 @@ jobs:
           asset_name: colf.linux-amd64
           asset_content_type: application/octet-stream
 
-      - uses: actions/download-artifact@master
+      - uses: actions/download-artifact@v2
         with:
           name: colf.darwin-amd64
           path: tmp

@@ -1,13 +1,12 @@
 (ns colf.block.animation.mosaic
   (:require
-   [colf.block.core :as b.core]
-   [colf.color :as color]))
+   [colf.block.core :as b.core]))
 
 (defn mosaic-out
   [{:keys [blocks color-code]}]
   (let [frame-num 30
         block-len (count blocks)
-        n (int (/ block-len frame-num))
+        n (max 1 (int (/ block-len frame-num)))
         all-indexes (shuffle (range block-len))]
     (loop [[indexes & rest-indexes] (partition-all n all-indexes)
            blocks blocks
@@ -17,9 +16,13 @@
         (let [next-blocks
               (reduce
                (fn [v idx]
-                 (update v idx (fn [_] (color/colorize color-code b.core/fill-block))))
+                 (update v idx (fn [_] (assoc b.core/fill-block :color color-code))))
                (vec blocks)
                indexes)]
           (recur rest-indexes next-blocks (conj result next-blocks)))))))
 
 (def mosaic-in (comp reverse mosaic-out))
+
+(comment
+ (colf.block.animation/test-play! mosaic-out)
+ (colf.block.animation/test-play! mosaic-in))

@@ -1,7 +1,9 @@
-(ns colf.block.core)
+(ns colf.block.core
+  (:require
+   [colf.color :as color]))
 
-(def fill-block \u25A0)
-(def empty-block \u25A1)
+(def fill-block {:color [] :content \u25A0})
+(def empty-block {:color [] :content \u25A1})
 
 (defn cursor-up
   [n]
@@ -11,5 +13,6 @@
   [blocks width]
   (let [lines (partition width blocks)]
     (doseq [line lines]
-      (println (apply str (interleave line (repeat \space)))))
+      (let [colored-line (map #(color/colorize (:color %) (:content %)) line)]
+        (println (apply str (interleave colored-line (repeat \space))))))
     (cursor-up (count lines))))

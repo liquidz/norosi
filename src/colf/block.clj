@@ -1,38 +1,54 @@
 (ns colf.block
   (:require
    [clojure.core.async :as async]
-   [colf.block.core :as b.core]
+   [clojure.data.json :as json]
    [colf.block.animation :as b.anime]
-   [colf.color :as color]
+   [colf.block.core :as b.core]
    [com.stuartsierra.component :as component]))
 
-(defn add-color-and-print
-  [blocks color-code width fps]
-  (let [new-blocks (drop-last (cons (color/colorize color-code b.core/fill-block)
-                                    blocks))
-        animation-f (rand-nth b.anime/animations)]
-    (-> {:before-blocks blocks
-         :after-blocks new-blocks
-         :color-code color-code
-         :width width}
-        (animation-f)
-        (b.anime/play! width fps))
+(defmulti process-action
+  (fn [action _m]
+    (first action)))
+
+(defmethod process-action :default
+  [_ {:keys [blocks]}]
+  blocks)
+
+(defmethod process-action :add
+  [[_ color-code] {:keys [blocks] :as m}]
+  (let [new-blocks (drop-last (cons (assoc b.core/fill-block :color color-code)
+                                    blocks))]
+    (b.anime/random-play!
+     (merge m {:color-code color-code
+               :new-blocks new-blocks}))
     new-blocks))
 
-(defrecord Blocks [add-ch exit-ch width height fps]
+(defmethod process-action :fetch
+  [[_ fetch-ch] {:keys [blocks width height]}]
+  (->> {:blocks (map #(update % :content str) blocks)
+        :width width
+        :height height}
+       (json/write-str)
+       (async/put! fetch-ch))
+  blocks)
+
+(defrecord Blocks [action-ch exit-ch initial-blocks width height fps]
   component/Lifecycle
   (start [this]
-    (let [add-ch (async/chan)
+    (let [action-ch (async/chan)
           exit-ch (async/chan)]
-      (async/go-loop [blocks (repeat (* width height) b.core/empty-block)]
+      (async/go-loop [blocks (or initial-blocks
+                                 (repeat (* width height) b.core/empty-block))]
         (b.core/print-blocks blocks width)
         (async/alt!
-          add-ch ([color-code] (recur (add-color-and-print blocks color-code width fps)))
+          action-ch ([action]
+                     (let [m {:blocks blocks :width width :height height :fps fps}]
+                       (recur (process-action action m))))
           exit-ch nil))
-      (assoc this :add-ch add-ch :exit-ch exit-ch)))
+      (assoc this :action-ch action-ch :exit-ch exit-ch)))
   (stop [this]
     (async/put! exit-ch true)))
 
 (defn new-blocks
-  [width height fps]
-  (map->Blocks {:width width :height height :fps fps}))
+  [initial-blocks width height fps]
+  (map->Blocks {:initial-blocks initial-blocks :width width :height height :fps fps}))

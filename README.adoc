@@ -1,0 +1,26 @@
+= Colf
+
+Color shelf for your notification, work logging, and etc.
+
+== Action
+
+=== Add a color
+Send `POST` request with `COLOR_CODE`.
+
+[source,sh]
+----
+curl -XPOST localhost:8000/COLOR_CODE
+----
+
+`COLOR_CODE` should be one of ANSI or Hex color code.
+
+E.g. `31` (Red for ANSI), `f00` (Red for Hex)
+
+=== Export
+
+Send `GET` request, and you will get a JSON response.
+
+[source,sh]
+----
+curl localhost:8000
+----
