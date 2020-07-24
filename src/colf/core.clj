@@ -12,15 +12,16 @@
   (Long/parseLong s))
 
 (def cli-options
-  [["-w" "--width WIDTH" "Blocks width" :default 10 :parse-fn parse-long]
-   ["-h" "--height HEIGHT" "Blocks height" :default 3 :parse-fn parse-long]
+  [["-w" "--width WIDTH" "Blocks width" :default 20 :parse-fn parse-long]
+   ["-h" "--height HEIGHT" "Blocks height" :default 5 :parse-fn parse-long]
+   ["-s" "--fps FPS" "FIXME" :default 100 :parse-fn parse-long]
    ["-p" "--port PORT" "Port number" :default 8000 :parse-fn parse-long]
    [nil "--help"]])
 
 (defn new-system
-  [profile {:keys [width height port]}]
+  [profile {:keys [width height fps port]}]
   (component/system-map
-   :blocks (block/new-blocks width height)
+   :blocks (block/new-blocks width height fps)
    :handler (component/using
              (handler/new-handler)
              [:blocks])

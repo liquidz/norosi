@@ -29,3 +29,10 @@
          (map #(parse-long % 16)))
 
     :else []))
+
+(defn colorize
+  [color-codes s]
+  (case (count color-codes)
+    1 (str \u001b "[" (first  color-codes) "m" s \u001b "[m")
+    3 (let [[r g b] color-codes]
+        (str \u001b "[" 38 ";2;" r ";" g ";" b "m" s \u001B "[m"))))

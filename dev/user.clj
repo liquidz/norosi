@@ -6,7 +6,7 @@
 (defonce system (atom nil))
 
 (def ^:private dev-opts
-  {:width 5 :height 2 :port 8009})
+  {:width 5 :height 2 :fps 50 :port 8009})
 
 (defn start
   []
