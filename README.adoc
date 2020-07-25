@@ -2,19 +2,38 @@
 
 Notification, work logging, and etc.
 
-== Action
+image:https://github.com/liquidz/norosi/workflows/test/badge.svg["GitHub Actions for test workflow", link="https://github.com/liquidz/norosi/actions?query=workflow%3Atest"]
+image:https://github.com/liquidz/norosi/workflows/lint/badge.svg["GitHub Actions for lint workflow", link="https://github.com/liquidz/norosi/actions?query=workflow%3Alint"]
+image:https://github.com/liquidz/norosi/workflows/dependencies/badge.svg["GitHub Actions for dependencies workflow", link="https://github.com/liquidz/norosi/actions?query=workflow%3Adependencies"]
+image:https://github.com/liquidz/norosi/workflows/native_image/badge.svg["GitHub Actions for native_image workflow", link="https://github.com/liquidz/norosi/actions?query=workflow%3Anative_image"]
 
-=== Add a color
-Send `POST` request with `COLOR_CODE`.
+
+== Usage
+
+Launch by `./noroshi`, and request by `curl`.
+
+
+== Request
+
+Norosi will launch a simple HTTP server to receive some requests on start up.
+
+=== Add a notification
+Send `POST` request with `COLOR_CODE` and `WORD` (OPTIONAL).
+
+- `COLOR_CODE` should be one of ANSI or Hex color code.
+- `WORD` should be a Unicode, and default `WORD` is `25A0` (■).
 
 [source,sh]
 ----
-curl -XPOST localhost:8000/COLOR_CODE
+# Red for ANSI
+curl -XPOST localhost:8000/31
+
+# Red for Hex
+curl -XPOST localhost:8000/F00
+
+# Yellow star
+curl -XPOST localhost:8000/FF0/2605
 ----
-
-`COLOR_CODE` should be one of ANSI or Hex color code.
-
-E.g. `31` (Red for ANSI), `f00` (Red for Hex)
 
 === Export
 
@@ -24,3 +43,52 @@ Send `GET` request, and you will get a JSON response.
 ----
 curl localhost:8000
 ----
+
+== Example
+
+.Notify every hours by cron
+[source,sh]
+----
+crontab -e
+0 * * * * curl -XPOST localhost:8000/6B7B6E/2B29
+----
+
+.Notifiy test result in https://github.com/liquidz/vim-iced[vim-iced]
+[source,vim]
+----
+let g:iced#hook['test_finished'] = {
+      \ 'type': 'shell',
+      \ 'exec': {v -> ['curl', '-XPOST', printf('localhost:8000/%s', (v.result ==# 'succeeded' ? '7BA23F' : 'D0104C'))]},
+      \ }
+----
+
+.Notify timer in https://github.com/liquidz/vim-textimer[vim-textimer]
+[source,vim]
+----
+let g:textimer#finished_command = 'curl'
+let g:textimer#finished_exec = '%c -XPOST localhost:8000/FFB11B'
+----
+
+== Build
+
+https://www.graalvm.org[GraalVM] is required.
+
+[source,sh]
+----
+make native-image
+----
+
+== License
+
+Copyright © 2020 https://twitter.com/uochan[Masashi Iizuka]
+
+This program and the accompanying materials are made available under the
+terms of the Eclipse Public License 2.0 which is available at
+http://www.eclipse.org/legal/epl-2.0.
+
+This Source Code may also be made available under the following Secondary
+Licenses when the conditions for such availability set forth in the Eclipse
+Public License, v. 2.0 are satisfied: GNU General Public License as published by
+the Free Software Foundation, either version 2 of the License, or (at your
+option) any later version, with the GNU Classpath Exception which is available
+at https://www.gnu.org/software/classpath/license.html.
