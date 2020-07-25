@@ -3,11 +3,11 @@
   (:require
    [clojure.data.json :as json]
    [clojure.tools.cli :as cli]
+   [com.stuartsierra.component :as component]
    [norosi.block :as block]
    [norosi.handler :as handler]
    [norosi.http :as http]
-   [norosi.util :as util]
-   [com.stuartsierra.component :as component]))
+   [norosi.util :as util]))
 
 (def cli-options
   [["-w" "--width WIDTH" "Blocks width" :default 20 :parse-fn util/parse-long]

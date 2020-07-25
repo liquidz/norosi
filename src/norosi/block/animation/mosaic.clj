@@ -22,7 +22,3 @@
           (recur rest-indexes next-blocks (conj result next-blocks)))))))
 
 (def mosaic-in (comp reverse mosaic-out))
-
-(comment
- (norosi.block.animation/test-play! mosaic-out)
- (norosi.block.animation/test-play! mosaic-in))

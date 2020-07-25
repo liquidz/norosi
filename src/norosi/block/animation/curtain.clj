@@ -25,8 +25,3 @@
     (apply interleave (repeat 2 frames))))
 
 (def curtain-in (comp reverse curtain-out))
-
-(comment
-(norosi.block.animation/test-play! curtain-out))
-
-

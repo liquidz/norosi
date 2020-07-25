@@ -17,7 +17,3 @@
         lines)))))
 
 (def slide-in (comp reverse slide-out))
-
-(comment
- (norosi.block.animation/test-play! slide-out)
- (norosi.block.animation/test-play! slide-in))

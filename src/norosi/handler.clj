@@ -2,9 +2,9 @@
   (:require
    [clojure.core.async :as async]
    [clojure.string :as str]
+   [com.stuartsierra.component :as component]
    [norosi.color :as color]
-   [norosi.util :as util]
-   [com.stuartsierra.component :as component]))
+   [norosi.util :as util]))
 
 (defn handle-get
   [action-ch _]

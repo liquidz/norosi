@@ -17,6 +17,3 @@
   [m]
   (let [frames (blink* m)]
     (apply interleave (repeat 10 frames))))
-
-(comment
- (norosi.block.animation/test-play! blink))

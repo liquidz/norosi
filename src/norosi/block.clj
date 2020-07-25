@@ -2,9 +2,9 @@
   (:require
    [clojure.core.async :as async]
    [clojure.data.json :as json]
+   [com.stuartsierra.component :as component]
    [norosi.block.animation :as b.anime]
-   [norosi.block.core :as b.core]
-   [com.stuartsierra.component :as component]))
+   [norosi.block.core :as b.core]))
 
 (defmulti process-action
   (fn [action _m]
