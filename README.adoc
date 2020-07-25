@@ -2,16 +2,16 @@
 
 Notification, work logging, and etc.
 
+WARNING: This project is work in progress.
+
 image:https://github.com/liquidz/norosi/workflows/test/badge.svg["GitHub Actions for test workflow", link="https://github.com/liquidz/norosi/actions?query=workflow%3Atest"]
 image:https://github.com/liquidz/norosi/workflows/lint/badge.svg["GitHub Actions for lint workflow", link="https://github.com/liquidz/norosi/actions?query=workflow%3Alint"]
 image:https://github.com/liquidz/norosi/workflows/dependencies/badge.svg["GitHub Actions for dependencies workflow", link="https://github.com/liquidz/norosi/actions?query=workflow%3Adependencies"]
 image:https://github.com/liquidz/norosi/workflows/native_image/badge.svg["GitHub Actions for native_image workflow", link="https://github.com/liquidz/norosi/actions?query=workflow%3Anative_image"]
 
-
 == Usage
 
 Launch by `./noroshi`, and request by `curl`.
-
 
 == Request
 
