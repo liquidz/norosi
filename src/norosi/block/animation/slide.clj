@@ -1,6 +1,6 @@
-(ns colf.block.animation.slide
+(ns norosi.block.animation.slide
   (:require
-   [colf.block.core :as b.core]))
+   [norosi.block.core :as b.core]))
 
 (defn slide-out
   [{:keys [blocks width color-code]}]
@@ -19,5 +19,5 @@
 (def slide-in (comp reverse slide-out))
 
 (comment
- (colf.block.animation/test-play! slide-out)
- (colf.block.animation/test-play! slide-in))
+ (norosi.block.animation/test-play! slide-out)
+ (norosi.block.animation/test-play! slide-in))

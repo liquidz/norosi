@@ -1,6 +1,6 @@
-(ns colf.block.animation.blink
+(ns norosi.block.animation.blink
   (:require
-   [colf.block.core :as b.core]))
+   [norosi.block.core :as b.core]))
 
 (defn- blink*
   [{:keys [blocks color-code]}]
@@ -19,4 +19,4 @@
     (apply interleave (repeat 10 frames))))
 
 (comment
- (colf.block.animation/test-play! blink))
+ (norosi.block.animation/test-play! blink))

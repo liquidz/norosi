@@ -1,9 +1,9 @@
-(ns colf.handler
+(ns norosi.handler
   (:require
    [clojure.core.async :as async]
    [clojure.string :as str]
-   [colf.color :as color]
-   [colf.util :as util]
+   [norosi.color :as color]
+   [norosi.util :as util]
    [com.stuartsierra.component :as component]))
 
 (defn handle-get

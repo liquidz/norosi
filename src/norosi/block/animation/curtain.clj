@@ -1,6 +1,6 @@
-(ns colf.block.animation.curtain
+(ns norosi.block.animation.curtain
   (:require
-   [colf.block.core :as b.core]))
+   [norosi.block.core :as b.core]))
 
 (defn- curtain-out*
   [{:keys [blocks width color-code]}]
@@ -27,6 +27,6 @@
 (def curtain-in (comp reverse curtain-out))
 
 (comment
-(colf.block.animation/test-play! curtain-out))
+(norosi.block.animation/test-play! curtain-out))
 
 

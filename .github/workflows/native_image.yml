@@ -32,11 +32,11 @@ jobs:
           gu install native-image
           make native-image
       - name: Rename
-        run: mv target/colf colf.${{ matrix.suffix  }}
+        run: mv target/norosi norosi.${{ matrix.suffix  }}
       - uses: actions/upload-artifact@v2
         with:
-          name: colf.${{ matrix.suffix  }}
-          path: ./colf.${{ matrix.suffix  }}
+          name: norosi.${{ matrix.suffix  }}
+          path: ./norosi.${{ matrix.suffix  }}
 
   create-release:
     needs: [native-image]
@@ -58,7 +58,7 @@ jobs:
 
       - uses: actions/download-artifact@v2
         with:
-          name: colf.linux-amd64
+          name: norosi.linux-amd64
           path: tmp
       - uses: actions/upload-release-asset@v1
         id: upload-linux-release-asset
@@ -66,13 +66,13 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: ./tmp/colf.linux-amd64
-          asset_name: colf.linux-amd64
+          asset_path: ./tmp/norosi.linux-amd64
+          asset_name: norosi.linux-amd64
           asset_content_type: application/octet-stream
 
       - uses: actions/download-artifact@v2
         with:
-          name: colf.darwin-amd64
+          name: norosi.darwin-amd64
           path: tmp
       - uses: actions/upload-release-asset@v1
         id: upload-darwin-release-asset
@@ -80,6 +80,6 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: ./tmp/colf.darwin-amd64
-          asset_name: colf.darwin-amd64
+          asset_path: ./tmp/norosi.darwin-amd64
+          asset_name: norosi.darwin-amd64
           asset_content_type: application/octet-stream

@@ -1,7 +1,7 @@
-(ns colf.color-test
+(ns norosi.color-test
   (:require
    [clojure.test :as t]
-   [colf.color :as sut]))
+   [norosi.color :as sut]))
 
 (t/deftest parse-color-code-test
   (t/are [expected in] (= expected (sut/parse-color-code in))

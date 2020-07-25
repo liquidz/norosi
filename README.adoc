@@ -1,6 +1,6 @@
-= Colf
+= Norosi
 
-Color shelf for your notification, work logging, and etc.
+Notification, work logging, and etc.
 
 == Action
 

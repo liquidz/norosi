@@ -13,8 +13,8 @@ else
 fi
 
 ${NATIVE_IMAGE} \
-  -jar target/colf-standalone.jar \
-  -H:Name=target/colf \
+  -jar target/norosi-standalone.jar \
+  -H:Name=target/norosi \
   -H:+ReportExceptionStackTraces \
   -J-Dclojure.spec.skip-macros=true \
   -J-Dclojure.compiler.direct-linking=true \

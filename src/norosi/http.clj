@@ -1,4 +1,4 @@
-(ns colf.http
+(ns norosi.http
   (:require
    [com.stuartsierra.component :as component])
   (:import
@@ -52,7 +52,7 @@
             (.set "Content-Type" (get-in res [:headers "Content-Type"] "text/plain"))
             (.set "Last-Modified" (.. (ZonedDateTime/now ZoneOffset/UTC)
                                       (format (DateTimeFormatter/RFC_1123_DATE_TIME))))
-            (.set "Server" "colf"))
+            (.set "Server" "norosi"))
 
           (send-response! t (get res :status 200) (:body res)))
         (catch Exception ex

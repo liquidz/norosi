@@ -1,9 +1,9 @@
-(ns colf.block
+(ns norosi.block
   (:require
    [clojure.core.async :as async]
    [clojure.data.json :as json]
-   [colf.block.animation :as b.anime]
-   [colf.block.core :as b.core]
+   [norosi.block.animation :as b.anime]
+   [norosi.block.core :as b.core]
    [com.stuartsierra.component :as component]))
 
 (defmulti process-action

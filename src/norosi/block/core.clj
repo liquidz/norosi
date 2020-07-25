@@ -1,6 +1,6 @@
-(ns colf.block.core
+(ns norosi.block.core
   (:require
-   [colf.color :as color]))
+   [norosi.color :as color]))
 
 (def fill-block {:color [] :content \u25A0})
 (def empty-block {:color [] :content \u25A1})

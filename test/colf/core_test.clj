@@ -1,1 +1,0 @@
-(ns colf.core-test)

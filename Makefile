@@ -11,7 +11,7 @@ repl:
 	iced repl -A:dev
 
 run:
-	clojure -m colf.core
+	clojure -m norosi.core
 
 test:
 	clojure -R:dev -A:test
@@ -27,10 +27,10 @@ pom:
 	clojure -Spom
 
 uberjar: pom
-	clojure -A:depstar -m hf.depstar.uberjar target/colf-standalone.jar -C -m colf.core
+	clojure -A:depstar -m hf.depstar.uberjar target/norosi-standalone.jar -C -m norosi.core
 
 jar: pom
-	clojure -A:depstar -m hf.depstar.jar target/colf.jar
+	clojure -A:depstar -m hf.depstar.jar target/norosi.jar
 
 native-image: uberjar
 	bash script/native-image.sh

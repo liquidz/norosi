@@ -1,6 +1,6 @@
-(ns colf.block.animation.mosaic
+(ns norosi.block.animation.mosaic
   (:require
-   [colf.block.core :as b.core]))
+   [norosi.block.core :as b.core]))
 
 (defn mosaic-out
   [{:keys [blocks color-code]}]
@@ -24,5 +24,5 @@
 (def mosaic-in (comp reverse mosaic-out))
 
 (comment
- (colf.block.animation/test-play! mosaic-out)
- (colf.block.animation/test-play! mosaic-in))
+ (norosi.block.animation/test-play! mosaic-out)
+ (norosi.block.animation/test-play! mosaic-in))

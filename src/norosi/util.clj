@@ -1,4 +1,4 @@
-(ns colf.util)
+(ns norosi.util)
 
 (defn parse-long
   ([^String s]

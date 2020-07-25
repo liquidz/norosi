@@ -1,6 +1,6 @@
 (ns user
   (:require
-   [colf.core :as core]
+   [norosi.core :as core]
    [com.stuartsierra.component :as component]))
 
 (defonce system (atom nil))

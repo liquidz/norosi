@@ -1,6 +1,6 @@
-(ns colf.color
+(ns norosi.color
   (:require
-   [colf.util :as util]))
+   [norosi.util :as util]))
 
 (defn- normalize-hex
   [^String s]

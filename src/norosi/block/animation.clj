@@ -1,10 +1,10 @@
-(ns colf.block.animation
+(ns norosi.block.animation
   (:require
-   [colf.block.animation.blink :as b.anime.blink]
-   [colf.block.animation.curtain :as b.anime.curtain]
-   [colf.block.animation.mosaic :as b.anime.mosaic]
-   [colf.block.animation.slide :as b.anime.slide]
-   [colf.block.core :as b.core]))
+   [norosi.block.animation.blink :as b.anime.blink]
+   [norosi.block.animation.curtain :as b.anime.curtain]
+   [norosi.block.animation.mosaic :as b.anime.mosaic]
+   [norosi.block.animation.slide :as b.anime.slide]
+   [norosi.block.core :as b.core]))
 
 (defn slide-and-blink
   [{:keys [blocks new-blocks color-code width]}]

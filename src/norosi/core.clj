@@ -1,12 +1,12 @@
-(ns colf.core
+(ns norosi.core
   (:gen-class)
   (:require
    [clojure.data.json :as json]
    [clojure.tools.cli :as cli]
-   [colf.block :as block]
-   [colf.handler :as handler]
-   [colf.http :as http]
-   [colf.util :as util]
+   [norosi.block :as block]
+   [norosi.handler :as handler]
+   [norosi.http :as http]
+   [norosi.util :as util]
    [com.stuartsierra.component :as component]))
 
 (def cli-options

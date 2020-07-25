@@ -1,0 +1,1 @@
+(ns norosi.core-test)
