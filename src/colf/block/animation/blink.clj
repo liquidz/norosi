@@ -2,16 +2,21 @@
   (:require
    [colf.block.core :as b.core]))
 
-(defn blink
+(defn- blink*
   [{:keys [blocks color-code]}]
   (let [len (count blocks)
         empty-blocks (repeat len b.core/empty-block)
         fill-blocks (repeat len (assoc b.core/fill-block :color color-code))]
-    (concat
-     (repeat 5 empty-blocks)
-     (repeat 10 fill-blocks)
-     (repeat 5 empty-blocks)
-     (repeat 10 fill-blocks))))
+    [fill-blocks fill-blocks
+     empty-blocks
+     fill-blocks fill-blocks
+     empty-blocks
+     fill-blocks fill-blocks]))
+
+(defn blink
+  [m]
+  (let [frames (blink* m)]
+    (apply interleave (repeat 10 frames))))
 
 (comment
  (colf.block.animation/test-play! blink))

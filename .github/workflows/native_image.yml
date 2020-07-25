@@ -32,7 +32,7 @@ jobs:
           gu install native-image
           make native-image
       - name: Rename
-        run: mv colf colf.${{ matrix.suffix  }}
+        run: mv target/colf colf.${{ matrix.suffix  }}
       - uses: actions/upload-artifact@v2
         with:
           name: colf.${{ matrix.suffix  }}
