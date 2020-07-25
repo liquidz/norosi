@@ -2,6 +2,7 @@
   (:gen-class)
   (:require
    [clojure.data.json :as json]
+   [clojure.string :as str]
    [clojure.tools.cli :as cli]
    [com.stuartsierra.component :as component]
    [norosi.block :as block]
@@ -12,8 +13,8 @@
 (def cli-options
   [["-w" "--width WIDTH" "Blocks width" :default 20 :parse-fn util/parse-long]
    ["-h" "--height HEIGHT" "Blocks height" :default 5 :parse-fn util/parse-long]
-   ["-s" "--fps FPS" "FIXME" :default 100 :parse-fn util/parse-long]
-   ["-i" "--import JSON" "FIXME"]
+   ["-s" "--fps FPS" "Frames per second" :default 100 :parse-fn util/parse-long]
+   ["-i" "--import JSON" "Import a exported JSON file"]
    ["-p" "--port PORT" "Port number" :default 8000 :parse-fn util/parse-long]
    [nil "--help"]])
 
@@ -39,13 +40,24 @@
                                 :join? (= :prod profile)})
               [:handler]))))
 
+(defn- usage
+  [summary]
+  (->> ["Usage:"
+        "  ./noroshi [OPTIONS]"
+        ""
+        "Options:"
+        summary]
+       (str/join "\n")
+       (println)))
+
 (defn -main
   [& args]
   (let [{:keys [options summary errors]} (cli/parse-opts args cli-options)
         {:keys [port help]} options]
     (cond
-      errors (doseq [e errors] (println e))
-      help (println (str "Usage:\n" summary))
+      errors (do (doseq [e errors] (println e))
+                 (usage summary))
+      help (usage summary)
       :else (do (println (format "# HTTP server will start on port %d" port))
                 (println (format "# e.g. curl -XPOST http://localhost:%d/51A8DD" port))
                 (component/start-system
