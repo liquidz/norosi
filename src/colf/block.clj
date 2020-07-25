@@ -15,9 +15,11 @@
   blocks)
 
 (defmethod process-action :add
-  [[_ color-code] {:keys [blocks] :as m}]
-  (let [new-blocks (drop-last (cons (assoc b.core/fill-block :color color-code)
-                                    blocks))]
+  [[_ color-code chr] {:keys [blocks] :as m}]
+  (let [block (cond-> b.core/fill-block
+                chr (assoc :content chr)
+                true (assoc :color color-code))
+        new-blocks (drop-last (cons block blocks))]
     (b.anime/random-play!
      (merge m {:color-code color-code
                :new-blocks new-blocks}))

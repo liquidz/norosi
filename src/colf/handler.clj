@@ -3,6 +3,7 @@
    [clojure.core.async :as async]
    [clojure.string :as str]
    [colf.color :as color]
+   [colf.util :as util]
    [com.stuartsierra.component :as component]))
 
 (defn handle-get
@@ -16,7 +17,10 @@
 (defn handle-post
   [action-ch {:keys [uri]}]
   (let [params (drop 1 (str/split uri #"/"))
-        color-codes (color/parse-color-code (first params))]
+        color-codes (color/parse-color-code (first params))
+        chr (try
+              (some-> params (second) (util/parse-long 16) (char))
+              (catch Throwable _ nil))]
     (cond
       (empty? params)
       "No color-code"
@@ -26,7 +30,7 @@
       (format "Invalid color-code: %s" (pr-str params))
 
       :else
-      (do (async/put! action-ch [:add color-codes])
+      (do (async/put! action-ch [:add color-codes chr])
           "OK"))))
 
 (defn handler*

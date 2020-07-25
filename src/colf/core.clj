@@ -6,18 +6,15 @@
    [colf.block :as block]
    [colf.handler :as handler]
    [colf.http :as http]
+   [colf.util :as util]
    [com.stuartsierra.component :as component]))
 
-(defn- parse-long
-  [^String s]
-  (Long/parseLong s))
-
 (def cli-options
-  [["-w" "--width WIDTH" "Blocks width" :default 20 :parse-fn parse-long]
-   ["-h" "--height HEIGHT" "Blocks height" :default 5 :parse-fn parse-long]
-   ["-s" "--fps FPS" "FIXME" :default 100 :parse-fn parse-long]
+  [["-w" "--width WIDTH" "Blocks width" :default 20 :parse-fn util/parse-long]
+   ["-h" "--height HEIGHT" "Blocks height" :default 5 :parse-fn util/parse-long]
+   ["-s" "--fps FPS" "FIXME" :default 100 :parse-fn util/parse-long]
    ["-i" "--import JSON" "FIXME"]
-   ["-p" "--port PORT" "Port number" :default 8000 :parse-fn parse-long]
+   ["-p" "--port PORT" "Port number" :default 8000 :parse-fn util/parse-long]
    [nil "--help"]])
 
 (defn- import-json

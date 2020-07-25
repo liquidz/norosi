@@ -11,7 +11,7 @@ repl:
 	iced repl -A:dev
 
 run:
-	clj -m colf.core
+	clojure -m colf.core
 
 test:
 	clojure -R:dev -A:test
@@ -33,20 +33,7 @@ jar: pom
 	clojure -A:depstar -m hf.depstar.jar target/colf.jar
 
 native-image: uberjar
-	$(GRAALVM_HOME)/bin/native-image \
-		-jar target/colf-standalone.jar \
-		-H:Name=target/colf \
-		-H:+ReportExceptionStackTraces \
-		-J-Dclojure.spec.skip-macros=true \
-		-J-Dclojure.compiler.direct-linking=true \
-		--initialize-at-build-time  \
-		--report-unsupported-elements-at-runtime \
-		-H:Log=registerResource: \
-		--verbose \
-		--no-fallback \
-		--no-server \
-		$(GRAAL_EXTRA_OPTION) \
-		"-J-Xmx3g"
+	bash script/native-image.sh
 
 clean:
 	rm -rf target
