@@ -13,7 +13,7 @@ image:https://github.com/liquidz/norosi/workflows/native_image/badge.svg["GitHub
 
 Download a binary from https://github.com/liquidz/norosi/releases[Releases] page.
 
-Launch by `./noroshi`, and request by `curl`.
+Launch by `./norosi`, and request by `curl`.
 
 == Request
 
