@@ -16,8 +16,7 @@
   {:main-opts ["-m" "kaocha.runner"]}
 
   :outdated
-  {:extra-deps {antq/antq {:mvn/version "RELEASE"}
-                org.slf4j/slf4j-nop {:mvn/version "RELEASE"}}
+  {:extra-deps {antq/antq {:mvn/version "RELEASE"}}
    :main-opts ["-m" "antq.core"]}
 
   :depstar
