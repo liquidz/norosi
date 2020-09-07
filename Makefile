@@ -24,7 +24,7 @@ outdated:
 	clojure -A:outdated
 
 pom:
-	clojure -Spom
+	clojure -X:deps mvn-pom
 
 uberjar: pom
 	clojure -A:depstar -m hf.depstar.uberjar target/norosi-standalone.jar -C -m norosi.core
