@@ -10,5 +10,5 @@ jobs:
       - uses: actions/checkout@v2
       - uses: liquidz/antq-action@v1
         with:
-          excludes: 'lambdaisland/kaocha'
+          excludes: 'lambdaisland/kaocha org.slf4j/slf4j-nop'
 
