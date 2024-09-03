@@ -56,7 +56,7 @@ jobs:
           draft: false
           prerelease: false
 
-      - uses: actions/download-artifact@v2
+      - uses: actions/download-artifact@v4.1.7
         with:
           name: norosi.linux-amd64
           path: tmp
@@ -70,7 +70,7 @@ jobs:
           asset_name: norosi.linux-amd64
           asset_content_type: application/octet-stream
 
-      - uses: actions/download-artifact@v2
+      - uses: actions/download-artifact@v4.1.7
         with:
           name: norosi.darwin-amd64
           path: tmp
